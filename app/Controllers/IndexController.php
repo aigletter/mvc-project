@@ -14,7 +14,7 @@ use App\Services\Routing\Router;
  */
 class IndexController
 {
-    public function index($id, Router $router)
+    public function index()
     {
         echo 'Run index method index controller';
     }
