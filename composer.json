@@ -9,12 +9,16 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "psr/log": "^1.1@dev",
+        "ext-pdo": "*"
+    },
     "description": "",
     "autoload": {
         "psr-4": {
             "Core\\": "core",
-            "App\\": "app"
+            "App\\": "app",
+            "Logging\\": "core/Services/Logging"
         }
     }
 }

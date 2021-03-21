@@ -1,0 +1,18 @@
+debug: Hello - 
+debug: Hello - 
+debug: Hello - 
+debug: Hello - 
+debug: Hello - 
+debug: Hello - test:Hello
+
+debug: Hello - test:Hello
+
+debug: Hello - test:Hello
+Blablabla
+
+debug: Hello - test:Hello
+Blablabla
+
+{"level":"debug","message":"Hello","context":{"test":"Hello","0":"Blablabla"}}
+{"level":"debug","message":"Hello","context":{"test":"Hello","0":"Blablabla"}}
+{"level":"debug","message":"Hello","context":{"test":"Hello","0":"Blablabla"}}

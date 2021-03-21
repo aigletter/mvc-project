@@ -8,6 +8,7 @@ use Core\Contracts\ContainerInterface;
 use Core\Contracts\FactoryAbstract;
 use Core\Contracts\RouterInterface;
 use Core\Contracts\RunableInterface;
+use Logging\Logger;
 
 /**
  * Class Application
@@ -25,7 +26,7 @@ class Application implements RunableInterface, ContainerInterface
     /**
      * @var array Массив приязок названий севрисов и фабрик, которые умеют их создавать
      */
-    protected $bingings = [];
+    protected $bindings = [];
 
     /**
      * @var array Массив уже созданных инстансов.
@@ -67,11 +68,11 @@ class Application implements RunableInterface, ContainerInterface
     {
         if (!empty($config['services'])) {
             foreach ($config['services'] as $name => $factory) {
-                if (!class_exists($factory) || !is_a($factory, FactoryAbstract::class, true)) {
+                /*if (!class_exists($factory) || !is_a($factory, FactoryAbstract::class, true)) {
                     throw new \Exception('Can not create factory');
-                }
+                }*/
 
-                $this->bingings[$name] = $factory;
+                $this->bindings[$name] = $factory;
             }
         }
     }
@@ -91,16 +92,20 @@ class Application implements RunableInterface, ContainerInterface
             return $this->services[$name];
         }
 
-        if (array_key_exists($name, $this->bingings)) {
-            $factory = $this->bingings[$name];
-            $factory = new $factory();
+        if (array_key_exists($name, $this->bindings)) {
+            $factory = $this->bindings[$name];
+            if (is_array($factory)) {
+                $options = $factory['options'] ?? [];
+                $factory = $factory['factory'];
+            }
+            $factory = new $factory($this, $options ?? []);
             $instance = $factory->createInstance();
             $this->services[$name] = $instance;
 
             return $instance;
         }
 
-        return null;
+        throw new \Exception('Can not create service');
     }
 
     /**
@@ -121,8 +126,13 @@ class Application implements RunableInterface, ContainerInterface
      */
     public function run()
     {
+        $logger = $this->get(Logger::class);
+        $logger->debug('Start application', [
+            'test' => 'Hello'
+        ]);
+
         // Получаем инстанс сервиса роутера
-        $router = $this->get(RouterInterface::class);
+        $router = $this->get('router');
 
         // Запускаем, собственно, роутинг.
         // Роутер должен определить, есть ли вызов метода

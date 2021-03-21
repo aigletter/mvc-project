@@ -13,6 +13,16 @@ namespace Core\Contracts;
  */
 abstract class FactoryAbstract
 {
+    protected $app;
+
+    protected $options;
+
+    public function __construct($app, $options = [])
+    {
+        $this->app = $app;
+        $this->options = $options;
+    }
+
     /**
      * Публичный метод, через который и будет происходить взаимодействие с конкретными фабриками
      *
