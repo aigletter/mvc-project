@@ -17,5 +17,5 @@ interface RouterInterface
      *
      * @return callable
      */
-    public function route(): callable;
+    public function route();
 }

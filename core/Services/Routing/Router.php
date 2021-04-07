@@ -40,7 +40,7 @@ class Router implements RouterInterface
      * @param string $path
      * @param string $action
      */
-    public function addRoute(string $method, string $path, callable $action)
+    public function addRoute(string $method, string $path, $action)
     {
         $this->routes[$method][$path] = $action;
     }
@@ -51,18 +51,20 @@ class Router implements RouterInterface
      * @return callable
      * @throws \Exception
      */
-    public function route(): callable
+    public function route()
     {
         // Получаем метод и путь запроса и проверяем есть ли для него сконфигурированный роут
         $method = $_SERVER['REQUEST_METHOD'];
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $action = $this->routes[$method][$path] ?? null;
+        if ($action = $this->routes[$method][$path]) {
+            return $action;
+        }
         // Если роут есть, возвращаем колбек функцию, вызывающию соответствующий роут
-        if ($action && is_callable($action)) {
+        /*if ($action && is_callable($action)) {
             return function() use ($method, $path) {
                 return $this->routes[$method][$path]();
             };
-        }
+        }*/
 
         throw new \Exception('Can not define route');
     }

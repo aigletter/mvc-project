@@ -16,8 +16,8 @@ $this->addRoute('GET', '/test', function () {
 
 // Пример испоьзования экземпяра класса и его метода
 // todo Создание экземпляров контроллеров нужно сделать динамически
-$this->addRoute('GET', '/', [new IndexController(), 'index']);
+$this->addRoute('GET', '/', [IndexController::class, 'index']);
 
 // Пример использования invokable обьектов
 // todo Создание экземпляров контроллеров нужно сделать динамически
-$this->addRoute('GET', '/user', new Invokable());
+$this->addRoute('GET', '/user', Invokable::class);
