@@ -11,7 +11,8 @@
     "minimum-stability": "dev",
     "require": {
         "psr/log": "^1.1@dev",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+      "ext-fileinfo": "*"
     },
     "description": "",
     "autoload": {

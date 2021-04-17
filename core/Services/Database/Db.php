@@ -14,11 +14,19 @@ class Db
         $this->pdo = new \PDO($dsn, $user, $password);
     }
 
-    public function query(Query $query)
+    public function query($query)
     {
-        $sql = $query->toSql();
-        $result = $this->pdo->query($sql);
+        //$sql = $query->toSql();
+        $result = $this->pdo->query($query);
 
         return $result->fetchAll();
+    }
+
+    public function rawOne(string $sql, $params = [])
+    {
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute($params);
+
+        return $statement->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

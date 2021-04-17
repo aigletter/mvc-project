@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\Api\Api;
+use App\Services\Auth\Auth;
 use App\Services\Cache\Cache;
 use App\Services\Cache\CacheFactory;
 use App\Services\Routing\TestWriter;
@@ -42,20 +43,23 @@ return [
             'class' => Logger::class
         ],
         WriterInterface::class => [
-            'class' => TestWriter::class,
+            /*'class' => TestWriter::class,
             'options' => [
                 'test' => 'Hello world'
-            ]
-            /*'class' => FileWriter::class,
+            ]*/
+            'class' => FileWriter::class,
             'options' => [
                 'file' => $_SERVER['DOCUMENT_ROOT'] . '/../storage/log.txt',
-            ]*/
+            ]
         ],
         FormatterInterface::class => [
             'class' => TextFormatter::class,
         ],
         'api' => [
             'class' => Api::class,
+        ],
+        Auth::class => [
+            'class' => Auth::class
         ]
     ],
 ];

@@ -38,9 +38,4 @@ class IndexController
 
         echo 'Run index method index controller';
     }
-
-    public function user()
-    {
-        echo 'User method';
-    }
 }
